@@ -1,11 +1,10 @@
 package web.model;
 
-import org.hibernate.annotations.Generated;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

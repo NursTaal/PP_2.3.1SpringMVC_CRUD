@@ -1,6 +1,68 @@
 package web.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+
+import web.model.User;
+import web.service.UserService;
+
+import java.util.List;
+
+
+@Controller
+@RequestMapping("/people")
 public class UserController {
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping()
+    public String index(ModelMap model) {
+        //Получим всех людей и отправим на представление
+        model.addAttribute("users", userService.listUser());
+        return "users/index";
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, ModelMap model) {
+        // Получим одного человека и отправим на представление
+        model.addAttribute("user", userService.show(id));
+        return "users/show";
+    }
+
+    @GetMapping("/new")
+    public String newUser(@ModelAttribute("user") User user) {
+        return "/users/new";
+    }
+
+    @PostMapping()
+    public String createUser(@ModelAttribute("user") User user) {
+        userService.save(user);
+        return "redirect:/people";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(ModelMap model, @PathVariable("id") int id) {
+        model.addAttribute("user", userService.show(id));
+        return "/users/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update (@ModelAttribute("user") User user, @PathVariable("id") int id) {
+        userService.update(id,user);
+        return "redirect:/people";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        userService.delete(id);
+        return "redirect:/people";
+    }
 }
 /*
 Перейдем к созданию рабочего web-приложения. Все ключевые моменты были рассмотрены в предыдущих задачах.
@@ -12,8 +74,8 @@ public class UserController {
 2. Должен быть класс User с произвольными полями (id, name и т.п.).
 3. В приложении должна быть страница, на которую выводятся все юзеры с возможностью добавлять,
 удалять и изменять юзера.
-4. Конфигурация Spring через JavaConfig и аннотации, по аналогии с предыдущими проектами.
-Без использования xml. Без Spring Boot.
-5. Внесите изменения в конфигурацию для работы с базой данных.
-Вместо SessionFactory должен использоваться EntityManager.
+4. Конфигурация Spring через JavaConfig и аннотации, по аналогии с предыдущими проектами. SUCCESS
+Без использования xml. Без Spring Boot. SUCCESS
+5. Внесите изменения в конфигурацию для работы с базой данных. SUCCESS
+Вместо SessionFactory должен использоваться EntityManager. SUCCESS
  */
