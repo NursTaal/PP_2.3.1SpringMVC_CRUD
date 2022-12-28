@@ -4,7 +4,7 @@ package web.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +14,7 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "surName")
+    @Column(name = "sur_name")
     private String surName;
 
     public User() {
