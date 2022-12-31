@@ -16,23 +16,23 @@ public class UserDAOImpl implements UserDAO{
     private EntityManager entityManager;
 
     @Override
-    public User show(int id) {
+    public User getUserById(int id) {
         return entityManager.find(User.class, id);
     }
 
     @SuppressWarnings("JpaQlInspection")
     @Override
-    public List<User> listUser() {
+    public List<User> getAllUsers() {
         return entityManager.createQuery("select u from User u", User.class).getResultList();
     }
 
     @Override
-    public void save(User user) {
+    public void addUser(User user) {
         entityManager.persist(user);
     }
 
     @Override
-    public void update(int id, User user) {
+    public void updateUserById(int id, User user) {
          User user1 = entityManager.find(User.class,id);
          user1.setName(user.getName());
          user1.setSurName(user.getSurName());
@@ -40,7 +40,7 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public void delete(int id) {
+    public void deleteUserById(int id) {
         User user = entityManager.find(User.class,id);
         entityManager.remove(user);
     }

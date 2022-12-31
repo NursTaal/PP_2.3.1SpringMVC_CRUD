@@ -1,14 +1,11 @@
 package web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import web.model.User;
 import web.service.UserService;
-
-import java.util.List;
 
 
 @Controller
@@ -24,14 +21,14 @@ public class UserController {
     @GetMapping()
     public String index(ModelMap model) {
         //Получим всех людей и отправим на представление
-        model.addAttribute("users", userService.listUser());
+        model.addAttribute("users", userService.getAllUsers());
         return "users/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, ModelMap model) {
         // Получим одного человека и отправим на представление
-        model.addAttribute("user", userService.show(id));
+        model.addAttribute("user", userService.getUserById(id));
         return "users/show";
     }
 
@@ -42,25 +39,25 @@ public class UserController {
 
     @PostMapping()
     public String createUser(@ModelAttribute("user") User user) {
-        userService.save(user);
+        userService.addUser(user);
         return "redirect:/people";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(ModelMap model, @PathVariable("id") int id) {
-        model.addAttribute("user", userService.show(id));
+        model.addAttribute("user", userService.getUserById(id));
         return "/users/edit";
     }
 
     @PatchMapping("/{id}")
     public String update (@ModelAttribute("user") User user, @PathVariable("id") int id) {
-        userService.update(id,user);
+        userService.updateUserById(id,user);
         return "redirect:/people";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        userService.delete(id);
+        userService.deleteUserById(id);
         return "redirect:/people";
     }
 }
