@@ -39,6 +39,7 @@ public class UserController {
 
     @PostMapping()
     public String createUser(@ModelAttribute("user") User user) {
+        //Создадим нового юсера и сохраним в базе данный
         userService.addUser(user);
         return "redirect:/people";
     }
