@@ -20,7 +20,6 @@ public class UserDAOImpl implements UserDAO{
         return entityManager.find(User.class, id);
     }
 
-    @SuppressWarnings("JpaQlInspection")
     @Override
     public List<User> getAllUsers() {
         return entityManager.createQuery("select u from User u", User.class).getResultList();
