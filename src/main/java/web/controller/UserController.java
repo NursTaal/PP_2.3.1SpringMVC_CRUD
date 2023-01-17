@@ -22,7 +22,7 @@ public class UserController {
     public String index(ModelMap model) {
         //Получим всех людей и отправим на представление
         model.addAttribute("users", userService.getAllUsers());
-        return "users/index";
+        return "users/allUsers";
     }
 
     @GetMapping("/{id}")
